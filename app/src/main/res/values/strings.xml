@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Client Manager</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="favorites_fragment">Favorites fragment. A list of favorite clients sorted by frequency.</string>
+    <string name="recents_fragment">Recents fragment. A list of recent clients sorted by time.</string>
+    <string name="all_fragment">All fragment. A list of all the clients sorted alphabetically.</string>
+    <string name="recents_item">Recents</string>
+    <string name="favorites_item">Favorites</string>
+    <string name="all_item">All</string>
 
 </resources>
