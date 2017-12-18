@@ -78,23 +78,10 @@ public class AllFragment extends Fragment {
         // Inflate the layout for this fragment
         View allFragmentView = inflater.inflate(R.layout.fragment_all, container, false);
         mRecyclerView = allFragmentView.findViewById(R.id.all_recycler_view);
-
+        new DatabaseAsync().execute();
         //The RecyclerView.LayoutManager defines how elements are laid out.
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        new DatabaseAsync().execute();
-
-        try { Thread.sleep(1000);}
-        catch (InterruptedException e) { e.printStackTrace(); }
-
-        List<String> data = new ArrayList<>();
-        for(Client client : mFullNames) {
-            data.add(client.getFirstName()+" "+client.getLastName());
-        }
-
-        //Define an adapter
-        mAdapter = new AllRecyclerAdapter(data);
-        mRecyclerView.setAdapter(mAdapter);
 
         return allFragmentView;
     }
@@ -121,11 +108,19 @@ public class AllFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
+            List<String> data = new ArrayList<>();
+            for(Client client : mFullNames) {
+                data.add(client.getFirstName()+" "+client.getLastName());
+            }
+            //Define an adapter
+            mAdapter = new AllRecyclerAdapter(data);
+            mRecyclerView.setAdapter(mAdapter);
+            mAdapter.notifyDataSetChanged();
+
             for(Client client : AllFragment.this.mFullNames) {
-                System.out.println("AllFragment - onPostExecute");
+                System.out.print("AllFragment-onPostExecute: ");
                 System.out.println(client.getFirstName()+" "+client.getLastName());
             }
-
         }
     }
 
