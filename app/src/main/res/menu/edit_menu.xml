@@ -3,10 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/add_cancel"
+        android:checkable="false"
+        android:icon="@drawable/ic_cancel_white_24dp"
+        android:tooltipText="Save"
+        android:title="save"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/add_save"
         android:checkable="false"
         android:icon="@drawable/ic_save_white_24dp"
-        android:title="save"
+        android:tooltipText="Cancel"
+        android:title="cancel"
         app:showAsAction="always" />
 
 </menu>
