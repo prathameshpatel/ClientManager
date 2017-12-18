@@ -18,7 +18,7 @@ import io.github.prathameshpatel.clientmanager.entity.Client;
 public class MainActivity extends AppCompatActivity {
 
     public BottomNavigationView bottomNavigationView;
-    private AppDatabase db;
+//    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +28,11 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         populateFragment();
 
-        db = AppDatabase.getAppDatabase(getApplicationContext());
-        new DatabaseAsync().execute();
+//        db = AppDatabase.getAppDatabase(getApplicationContext());
+//        new DatabaseAsync().execute();
     }
 
-    private class DatabaseAsync extends AsyncTask<Void,Void,Void> {
+    /*private class DatabaseAsync extends AsyncTask<Void,Void,Void> {
         List<Client> fullNames;
         @Override
         protected Void doInBackground(Void... voids) {
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println(client.getFirstName()+" "+client.getLastName());
             }
         }
-    }
+    }*/
 
     public void populateFragment() {
 

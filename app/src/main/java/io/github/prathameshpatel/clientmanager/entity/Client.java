@@ -26,6 +26,9 @@ public class Client {
     private String address;
     private String phone;
 
+    @ColumnInfo(name = "is_favorite")
+    private int isFavorite = 0;
+
 //    private final String picture = firstName+lastName+"picture";
 
     public int getClientId() {
@@ -68,6 +71,14 @@ public class Client {
         this.phone = phone;
     }
 
+    public int getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(int isFav) {
+        this.isFavorite = isFav;
+    }
+
     public Client() {} //Empty Constructor
 
     public Client(int ID, String fname, String lname, String address, String phone) {
@@ -86,7 +97,7 @@ public class Client {
     }
 
     public String toString() {
-        return String.format("id=%d first_name=%s last_name=%s address=%s phone=%s"
-                ,clientId,firstName,lastName,address,phone);
+        return String.format("id=%d first_name=%s last_name=%s address=%s phone=%s isFavorite=%d"
+                ,clientId,firstName,lastName,address,phone,isFavorite);
     }
 }

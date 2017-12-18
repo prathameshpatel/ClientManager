@@ -26,7 +26,7 @@ public interface ClientDao {
     @Query("SELECT * FROM clients")
     List<Client> loadAllClients();
 
-    @Query("SELECT client_id, first_name, last_name FROM clients")
+    @Query("SELECT client_id, first_name, last_name, is_favorite FROM clients")
     List<Client> loadFullNames();
 
     @Query("DELETE FROM clients")
