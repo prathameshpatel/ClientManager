@@ -29,14 +29,18 @@ public interface ClientDao {
     @Query("SELECT client_id, first_name, last_name, is_favorite FROM clients")
     List<Client> loadFullNames();
 
-    @Query("SELECT * FROM clients Where client_id =:id")
-    Client loadClient(int id);
+    //client_id,first_name,last_name,address,phone,is_favorite
+    @Query("SELECT * FROM clients Where client_id = :id")
+    Client loadClientbyID(int id);
 
     @Query("DELETE FROM clients")
     void deleteAllClients();
 
     @Delete
     void deleteClients(Client... clients);
+
+    @Query("DELETE FROM sqlite_sequence WHERE name = 'clients'")
+    void deleteClientTable();
 
 
 }

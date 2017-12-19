@@ -35,7 +35,7 @@ public class AllFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
 
     private AppDatabase mdb;
-    public List<Client> mFullNames;
+    public List<Client> mclientList;
 
 //    private OnFragmentInteractionListener mListener;
 
@@ -92,9 +92,10 @@ public class AllFragment extends Fragment {
         protected Void doInBackground(Void... voids) {
             mdb.beginTransaction();
             try {
+                mdb.clientDao().deleteClientTable();
                 mdb.clientDao().deleteAllClients();
                 mdb.clientDao().insertClientList(DataGenerator.generateClients());
-                AllFragment.this.mFullNames = mdb.clientDao().loadFullNames();
+                AllFragment.this.mclientList = mdb.clientDao().loadFullNames();
 
                 mdb.setTransactionSuccessful();
             } finally {
@@ -108,19 +109,15 @@ public class AllFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            List<String> data = new ArrayList<>();
-            for(Client client : mFullNames) {
-                data.add(client.getFirstName()+" "+client.getLastName());
-            }
             //Define an adapter
-            mAdapter = new AllRecyclerAdapter(data);
+            mAdapter = new AllRecyclerAdapter(mclientList);
             mRecyclerView.setAdapter(mAdapter);
             mAdapter.notifyDataSetChanged();
 
-            for(Client client : AllFragment.this.mFullNames) {
-                System.out.print("AllFragment-onPostExecute: ");
-                System.out.println(client.getFirstName()+" "+client.getLastName());
-            }
+//            for(Client client : AllFragment.this.mclientList) {
+//                System.out.print("AllFragment-onPostExecute: ");
+//                System.out.println(client.getClientId()+" "+client.getFirstName()+" "+client.getLastName());
+//            }
         }
     }
 

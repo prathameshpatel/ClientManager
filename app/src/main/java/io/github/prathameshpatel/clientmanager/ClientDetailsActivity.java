@@ -21,6 +21,7 @@ public class ClientDetailsActivity extends AppCompatActivity {
     private TextView isFavorite;
 
     private static final String TAG = "ClientDetailsActivity";
+    public Client client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,22 +36,23 @@ public class ClientDetailsActivity extends AppCompatActivity {
         isFavorite = findViewById(R.id.isfavorite_textview);
 
         Intent intent = getIntent();
-        int position = intent.getIntExtra("position", 0);
+        int id = intent.getIntExtra("client_id", 0);
         mdb = AppDatabase.getAppDatabase(this.getApplicationContext());
 
+//        Client[] params = {client};
+
         //Execute Asynctask
-        new GetDetailsAsync().execute(position);
+        new GetDetailsAsync().execute(id);
     }
 
     private class GetDetailsAsync extends AsyncTask<Integer, Void, Client> {
-        Client client;
+//        Client c = ClientDetailsActivity.this.client;
 
         @Override
-        protected Client doInBackground(Integer... integers) {
+        protected Client doInBackground(Integer... params) {
             mdb.beginTransaction();
             try {
-                client = mdb.clientDao().loadClient(integers[0]);
-                Log.e(TAG, "client method call from doInBackground = " + client.toString());
+                client = mdb.clientDao().loadClientbyID(params[0]);
                 mdb.setTransactionSuccessful();
             } finally {
                 mdb.endTransaction();
@@ -62,19 +64,12 @@ public class ClientDetailsActivity extends AppCompatActivity {
         protected void onPostExecute(Client client) {
             super.onPostExecute(client);
 
-            clientId.setText("Cient ID = trial");
-            firstName.setText("First Name = trial");
-            lastName.setText("Last Name = trial");
-            address.setText("Address = trial");
-            phone.setText("Phone = trial");
-            isFavorite.setText("isFavorite = trial");
-
-//            clientId.setText("Cient ID = " + client.getClientId());
-//            firstName.setText("First Name = " + client.getFirstName());
-//            lastName.setText("Last Name = " + client.getLastName());
-//            address.setText("Address = " + client.getAddress());
-//            phone.setText("Phone = " + client.getPhone());
-//            isFavorite.setText("isFavorite = " + client.getIsFavorite());
+            clientId.setText("Cient ID = " + client.getClientId());
+            firstName.setText("First Name = " + client.getFirstName());
+            lastName.setText("Last Name = " + client.getLastName());
+            address.setText("Address = " + client.getAddress());
+            phone.setText("Phone = " + client.getPhone());
+            isFavorite.setText("isFavorite = " + client.getIsFavorite());
         }
     }
 }

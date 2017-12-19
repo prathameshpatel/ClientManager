@@ -21,7 +21,7 @@ import io.github.prathameshpatel.clientmanager.entity.Client;
 public class AllRecyclerAdapter extends RecyclerView.Adapter<AllRecyclerAdapter.ViewHolder>{
 
     private static String LOG_TAG = "AllRecyclerAdapter";
-    private List<String> mDataset;
+    private List<Client> mDataset;
 //    private static OnItemClickListener onItemClickListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener, View.OnLongClickListener*/{
@@ -56,7 +56,7 @@ public class AllRecyclerAdapter extends RecyclerView.Adapter<AllRecyclerAdapter.
 //        this.onItemClickListener = clickListener;
 //    }
 
-    public AllRecyclerAdapter(List<String> dataset) {
+    public AllRecyclerAdapter(List<Client> dataset) {
         mDataset = dataset;
     }
 
@@ -73,10 +73,12 @@ public class AllRecyclerAdapter extends RecyclerView.Adapter<AllRecyclerAdapter.
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         // Find out the data, based on this view holder's position
-        String thisItemName = mDataset.get(position);
-
+        final Client currentClient = mDataset.get(position);
+        String fullName = currentClient.getFirstName()+" "+currentClient.getLastName();
         //Set the data to the view_holder
-        holder.name_title.setText(thisItemName);
+        holder.name_title.setText(fullName);
+
+        final int id = currentClient.getClientId();
 
         //Set onClickListener for the view holder
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -84,9 +86,9 @@ public class AllRecyclerAdapter extends RecyclerView.Adapter<AllRecyclerAdapter.
             public void onClick(View v) {
                 Context context = v.getContext();
                 Intent intent = new Intent(context,ClientDetailsActivity.class);
-                intent.putExtra("position",position);
+                intent.putExtra("client_id",id);
                 context.startActivity(intent);
-                Toast.makeText(context, "position= "+position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "position= "+position+", id= "+id, Toast.LENGTH_SHORT).show();
             }
         });
     }
