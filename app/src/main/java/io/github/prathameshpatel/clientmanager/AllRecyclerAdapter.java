@@ -1,6 +1,7 @@
 package io.github.prathameshpatel.clientmanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -82,6 +83,9 @@ public class AllRecyclerAdapter extends RecyclerView.Adapter<AllRecyclerAdapter.
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
+                Intent intent = new Intent(context,ClientDetailsActivity.class);
+                intent.putExtra("position",position);
+                context.startActivity(intent);
                 Toast.makeText(context, "position= "+position, Toast.LENGTH_SHORT).show();
             }
         });
