@@ -86,7 +86,9 @@ public class ClientDetailsActivity extends AppCompatActivity {
                 return true;
             case R.id.details_edit:
                 //Go to EditActivity
-                startActivity(new Intent(ClientDetailsActivity.this, EditActivity.class));
+                Intent intent = new Intent(ClientDetailsActivity.this, EditActivity.class);
+                intent.putExtra("clientid",client.getClientId());
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -103,7 +105,7 @@ public class ClientDetailsActivity extends AppCompatActivity {
                 int rowid = mdb.clientDao().deleteClient(currentid);
                 if(rowid != 0) {
                     mdb.setTransactionSuccessful();
-                    Log.e("ClientDetailsActivity","InsertDetailsAsync doInBackground - client inserted successfully");
+                    Log.e(TAG,"InsertDetailsAsync doInBackground - client inserted successfully");
                     mdb.endTransaction();
 //                    finish();
                     Intent intent = new Intent(ClientDetailsActivity.this, MainActivity.class);
@@ -111,7 +113,7 @@ public class ClientDetailsActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else {
-                    Log.e("ClientDetailsActivity","InsertDetailsAsync doInBackground - client insert problem");
+                    Log.e(TAG,"InsertDetailsAsync doInBackground - client insert problem");
                 }
             } finally {
 //                mdb.endTransaction();

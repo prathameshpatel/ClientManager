@@ -5,6 +5,8 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
+
 import java.util.List;
 
 /**
@@ -32,6 +34,9 @@ public interface ClientDao {
     //client_id,first_name,last_name,address,phone,is_favorite
     @Query("SELECT * FROM clients Where client_id = :id")
     Client loadClientbyID(int id);
+
+    @Update
+    int updateClient(Client client);
 
     @Query("DELETE FROM clients")
     void deleteAllClients();

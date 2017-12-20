@@ -102,7 +102,6 @@ public class AddActivity extends AppCompatActivity {
             }
             return null;
         }
-
     }
 
     @Override

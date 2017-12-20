@@ -85,6 +85,12 @@ public class AllFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        new DatabaseAsync().execute();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment

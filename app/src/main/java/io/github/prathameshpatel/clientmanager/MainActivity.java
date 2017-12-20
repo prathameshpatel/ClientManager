@@ -31,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        populateFragment();
+        populateBottomBar();
     }
 
-    public void populateFragment() {
+    public void populateBottomBar() {
 
         //Manually displaying the first fragment - one time only
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
