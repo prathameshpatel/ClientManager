@@ -88,7 +88,7 @@ public class AllRecyclerAdapter extends RecyclerView.Adapter<AllRecyclerAdapter.
                 Intent intent = new Intent(context,ClientDetailsActivity.class);
                 intent.putExtra("client_id",id);
                 context.startActivity(intent);
-                Toast.makeText(context, "position= "+position+", id= "+id, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "position= "+position+", id= "+id, Toast.LENGTH_SHORT).show();
             }
         });
     }

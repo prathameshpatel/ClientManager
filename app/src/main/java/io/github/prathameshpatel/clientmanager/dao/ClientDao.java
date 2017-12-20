@@ -21,7 +21,7 @@ public interface ClientDao {
     void insertClientList(List<Client> clientList);
 
     @Insert
-    void insertClient(Client client);
+    long insertClient(Client client);
 
     @Query("SELECT * FROM clients")
     List<Client> loadAllClients();
@@ -35,6 +35,9 @@ public interface ClientDao {
 
     @Query("DELETE FROM clients")
     void deleteAllClients();
+
+    @Query("DELETE FROM clients WHERE client_id = :id")
+    int deleteClient(int id);
 
     @Delete
     void deleteClients(Client... clients);

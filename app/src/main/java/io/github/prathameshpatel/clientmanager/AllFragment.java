@@ -1,6 +1,7 @@
 package io.github.prathameshpatel.clientmanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,6 +39,17 @@ public class AllFragment extends Fragment {
     public List<Client> mclientList;
 
 //    private OnFragmentInteractionListener mListener;
+
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(requestCode == 4) {
+//
+//        }
+//          AllFragment allFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_all);
+//            update();
+//    }
 
     public AllFragment() {
         // Required empty public constructor
@@ -92,9 +104,9 @@ public class AllFragment extends Fragment {
         protected Void doInBackground(Void... voids) {
             mdb.beginTransaction();
             try {
-                mdb.clientDao().deleteClientTable();
-                mdb.clientDao().deleteAllClients();
-                mdb.clientDao().insertClientList(DataGenerator.generateClients());
+//                mdb.clientDao().deleteClientTable();
+//                mdb.clientDao().deleteAllClients();
+//                mdb.clientDao().insertClientList(DataGenerator.generateClients());
                 AllFragment.this.mclientList = mdb.clientDao().loadFullNames();
 
                 mdb.setTransactionSuccessful();
@@ -120,6 +132,10 @@ public class AllFragment extends Fragment {
 //            }
         }
     }
+
+//    public void update() {
+//        mAdapter.notifyDataSetChanged();
+//    }
 
     /*
     // TODO: Rename method, update argument and hook method into UI event

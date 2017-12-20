@@ -5,7 +5,11 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import io.github.prathameshpatel.clientmanager.db.AppDatabase;
 import io.github.prathameshpatel.clientmanager.entity.Client;
@@ -71,5 +75,56 @@ public class ClientDetailsActivity extends AppCompatActivity {
             phone.setText("Phone = " + client.getPhone());
             isFavorite.setText("isFavorite = " + client.getIsFavorite());
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.details_delete:
+                //Delete from database
+                new DeleteDetailsAsync().execute();
+                return true;
+            case R.id.details_edit:
+                //Go to EditActivity
+                startActivity(new Intent(ClientDetailsActivity.this, EditActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private class DeleteDetailsAsync extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mdb.beginTransaction();
+            try {
+                Log.e("ClientDetlsActvty Delet",client.toString());
+                int currentid = client.getClientId();
+                int rowid = mdb.clientDao().deleteClient(currentid);
+                if(rowid != 0) {
+                    mdb.setTransactionSuccessful();
+                    Log.e("ClientDetailsActivity","InsertDetailsAsync doInBackground - client inserted successfully");
+                    mdb.endTransaction();
+//                    finish();
+                    Intent intent = new Intent(ClientDetailsActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+                else {
+                    Log.e("ClientDetailsActivity","InsertDetailsAsync doInBackground - client insert problem");
+                }
+            } finally {
+//                mdb.endTransaction();
+            }
+            return null;
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.details_menu, menu);
+        return true;
+//        return super.onCreateOptionsMenu(menu);
     }
 }
