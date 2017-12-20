@@ -28,7 +28,7 @@ public interface ClientDao {
     @Query("SELECT * FROM clients")
     List<Client> loadAllClients();
 
-    @Query("SELECT client_id, first_name, last_name, is_favorite FROM clients")
+    @Query("SELECT client_id, first_name, last_name, is_favorite FROM clients ORDER BY first_name ASC")
     List<Client> loadFullNames();
 
     //client_id,first_name,last_name,address,phone,is_favorite

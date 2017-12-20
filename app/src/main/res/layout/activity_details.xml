@@ -6,48 +6,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="io.github.prathameshpatel.clientmanager.ClientDetailsActivity">
+    tools:context="io.github.prathameshpatel.clientmanager.DetailsActivity">
 
     <TextView
         android:id="@+id/id_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:text="ID"/>
 
     <TextView
         android:id="@+id/firstname_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:text="First Name"/>
 
     <TextView
         android:id="@+id/lastname_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:text="Last Name"/>
 
     <TextView
         android:id="@+id/address_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:text="Address"/>
 
     <TextView
         android:id="@+id/phone_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:text="Phone"/>
 
     <TextView
         android:id="@+id/isfavorite_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:text="isFavorite"/>
 
 </LinearLayout>

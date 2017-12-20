@@ -9,12 +9,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import io.github.prathameshpatel.clientmanager.db.AppDatabase;
 import io.github.prathameshpatel.clientmanager.entity.Client;
 
-public class ClientDetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity {
 
     private AppDatabase mdb;
     private TextView clientId;
@@ -24,13 +23,13 @@ public class ClientDetailsActivity extends AppCompatActivity {
     private TextView phone;
     private TextView isFavorite;
 
-    private static final String TAG = "ClientDetailsActivity";
+    private static final String TAG = "DetailsActivity";
     public Client client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_client_details);
+        setContentView(R.layout.activity_details);
 
         clientId = findViewById(R.id.id_textview);
         firstName = findViewById(R.id.firstname_textview);
@@ -50,7 +49,7 @@ public class ClientDetailsActivity extends AppCompatActivity {
     }
 
     private class GetDetailsAsync extends AsyncTask<Integer, Void, Client> {
-//        Client c = ClientDetailsActivity.this.client;
+//        Client c = DetailsActivity.this.client;
 
         @Override
         protected Client doInBackground(Integer... params) {
@@ -86,7 +85,7 @@ public class ClientDetailsActivity extends AppCompatActivity {
                 return true;
             case R.id.details_edit:
                 //Go to EditActivity
-                Intent intent = new Intent(ClientDetailsActivity.this, EditActivity.class);
+                Intent intent = new Intent(DetailsActivity.this, EditActivity.class);
                 intent.putExtra("clientid",client.getClientId());
                 startActivity(intent);
                 return true;
@@ -108,7 +107,7 @@ public class ClientDetailsActivity extends AppCompatActivity {
                     Log.e(TAG,"InsertDetailsAsync doInBackground - client inserted successfully");
                     mdb.endTransaction();
 //                    finish();
-                    Intent intent = new Intent(ClientDetailsActivity.this, MainActivity.class);
+                    Intent intent = new Intent(DetailsActivity.this, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }

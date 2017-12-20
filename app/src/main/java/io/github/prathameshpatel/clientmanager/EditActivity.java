@@ -90,7 +90,7 @@ public class EditActivity extends AppCompatActivity {
                 return true;
             case R.id.add_cancel:
 //                Toast.makeText(this, "Go back to main activity", Toast.LENGTH_SHORT).show();
-                //Go back to ClientDetailsActivity
+                //Go back to DetailsActivity
                 finish();
                 return true;
             default:
@@ -113,7 +113,7 @@ public class EditActivity extends AppCompatActivity {
                     mdb.setTransactionSuccessful();
                     Log.e(TAG,"UpdateDetailsAsync doInBackground - client updated successfully");
                     mdb.endTransaction();
-                    Intent intent = new Intent(EditActivity.this, ClientDetailsActivity.class);
+                    Intent intent = new Intent(EditActivity.this, DetailsActivity.class);
                     intent.putExtra("client_id", client.getClientId());
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
