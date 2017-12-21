@@ -2,17 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/bottom_nav_favorites"
-        android:title="@string/favorites_item"
-        android:icon="@drawable/ic_favorites_white_24dp" />
+        android:id="@+id/bottom_nav_all"
+        android:title="@string/all_item"
+        android:tooltipText="All"
+        android:icon="@drawable/ic_all_white_24dp" />
 
     <item
         android:id="@+id/bottom_nav_recents"
         android:title="@string/recents_item"
+        android:tooltipText="Recents"
         android:icon="@drawable/ic_recents_white_24dp" />
 
     <item
-        android:id="@+id/bottom_nav_all"
-        android:title="@string/all_item"
-        android:icon="@drawable/ic_all_white_24dp" />
+        android:id="@+id/bottom_nav_favorites"
+        android:title="@string/favorites_item"
+        android:tooltipText="Favorites"
+        android:icon="@drawable/ic_favorites_white_24dp" />
+
 </menu>
