@@ -31,9 +31,18 @@ public interface ClientDao {
     @Query("SELECT client_id, first_name, last_name, is_favorite FROM clients ORDER BY first_name ASC")
     List<Client> loadFullNames();
 
+    @Query("SELECT client_id, first_name, last_name, is_favorite FROM clients WHERE is_favorite = :isFav ORDER BY first_name ASC")
+    List<Client> loadFavoriteFullNames(int isFav);
+
     //client_id,first_name,last_name,address,phone,is_favorite
     @Query("SELECT * FROM clients Where client_id = :id")
     Client loadClientbyID(int id);
+
+    @Query("UPDATE clients SET is_favorite = :one WHERE client_id = :clientid")
+    void addFavorite(int clientid, int one);
+
+    @Query("UPDATE clients SET is_favorite = :zero WHERE client_id = :clientid")
+    void removeFavorite(int clientid, int zero);
 
     @Update
     int updateClient(Client client);

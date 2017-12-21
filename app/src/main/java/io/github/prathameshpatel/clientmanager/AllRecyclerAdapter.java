@@ -6,10 +6,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
+import io.github.prathameshpatel.clientmanager.db.AppDatabase;
 import io.github.prathameshpatel.clientmanager.entity.Client;
 
 /**
@@ -25,6 +29,7 @@ public class AllRecyclerAdapter extends RecyclerView.Adapter<AllRecyclerAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener, View.OnLongClickListener*/{
         public TextView name_title;
         public View mView; //view for the view holder
+        public CheckBox mCheckBox;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -32,6 +37,7 @@ public class AllRecyclerAdapter extends RecyclerView.Adapter<AllRecyclerAdapter.
 //            itemView.setOnLongClickListener(this);
             mView = itemView;
             name_title = itemView.findViewById(R.id.all_item_title);
+            mCheckBox = itemView.findViewById(R.id.star_checkbox);
         }
 
 //        @Override
@@ -69,7 +75,7 @@ public class AllRecyclerAdapter extends RecyclerView.Adapter<AllRecyclerAdapter.
 
     //Bind the data to the view_holder
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         // Find out the data, based on this view holder's position
         final Client currentClient = mDataset.get(position);
         String fullName = currentClient.getFirstName()+" "+currentClient.getLastName();
@@ -87,6 +93,22 @@ public class AllRecyclerAdapter extends RecyclerView.Adapter<AllRecyclerAdapter.
                 intent.putExtra("client_id",id);
                 context.startActivity(intent);
 //                Toast.makeText(context, "position= "+position+", id= "+id, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.mCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(holder.mCheckBox.isChecked()) {
+                    Toast.makeText(v.getContext(),"checked!", Toast.LENGTH_SHORT).show();
+                    FavoritesFragment.newInstance(null,null).addFavorite(id);
+                    notifyDataSetChanged();
+                }
+                else {
+                    Toast.makeText(v.getContext(),"un-checked!", Toast.LENGTH_SHORT).show();
+                    FavoritesFragment.newInstance(null,null).removeFavorite(id);
+                    notifyDataSetChanged();
+                }
             }
         });
     }

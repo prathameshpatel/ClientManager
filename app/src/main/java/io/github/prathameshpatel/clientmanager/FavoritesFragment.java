@@ -2,12 +2,19 @@ package io.github.prathameshpatel.clientmanager;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
+import io.github.prathameshpatel.clientmanager.db.AppDatabase;
+import io.github.prathameshpatel.clientmanager.entity.Client;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +33,13 @@ public class FavoritesFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
+    private AppDatabase mdb;
+    public List<Client> mclientList;
 
 //    private OnFragmentInteractionListener mListener;
 
@@ -58,13 +72,106 @@ public class FavoritesFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mdb = AppDatabase.getAppDatabase(getActivity().getApplicationContext());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        new DatabaseAsync().execute();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorites, container, false);
+        View favoriteFragmantView = inflater.inflate(R.layout.fragment_favorites, container, false);
+        mRecyclerView = favoriteFragmantView.findViewById(R.id.favorite_recycler_view);
+        new DatabaseAsync().execute();
+        //The RecyclerView.LayoutManager defines how elements are laid out.
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        return favoriteFragmantView;
+    }
+
+    private class DatabaseAsync extends AsyncTask<Void,Void,Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mdb.beginTransaction();
+            try {
+                FavoritesFragment.this.mclientList = mdb.clientDao().loadFavoriteFullNames(1);
+                mdb.setTransactionSuccessful();
+            } finally {
+                mdb.endTransaction();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            //Define an adapter
+            mAdapter = new AllRecyclerAdapter(mclientList);
+            mRecyclerView.setAdapter(mAdapter);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private class RemoveFavoriteAsync extends AsyncTask<Integer,Void,Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mdb = AppDatabase.getAppDatabase(getActivity().getApplicationContext());
+        }
+
+        @Override
+        protected Void doInBackground(Integer... integers) {
+            mdb.beginTransaction();
+            try {
+                mdb.clientDao().removeFavorite(integers[0],0);
+                mdb.setTransactionSuccessful();
+            } finally {
+                mdb.endTransaction();
+            }
+            return null;
+        }
+
+//        @Override
+//        protected void onPostExecute(Void aVoid) {
+//            super.onPostExecute(aVoid);
+//            //Define an adapter
+////            mAdapter = new AllRecyclerAdapter(mclientList);
+////            mRecyclerView.setAdapter(mAdapter);
+//            mAdapter.notifyDataSetChanged();
+//        }
+    }
+
+    public void removeFavorite(int clientid) {
+        new RemoveFavoriteAsync().execute(clientid);
+    }
+
+    private class AddFavoriteAsync extends AsyncTask<Integer,Void,Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mdb = AppDatabase.getAppDatabase(getContext());
+        }
+
+        @Override
+        protected Void doInBackground(Integer... integers) {
+            mdb.beginTransaction();
+            try {
+                mdb.clientDao().addFavorite(integers[0],1);
+                mdb.setTransactionSuccessful();
+            } finally {
+                mdb.endTransaction();
+            }
+            return null;
+        }
+    }
+
+    public void addFavorite(int clientid) {
+        new AddFavoriteAsync().execute(clientid);
     }
 
     /*

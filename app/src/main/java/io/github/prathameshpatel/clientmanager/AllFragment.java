@@ -19,8 +19,6 @@ import io.github.prathameshpatel.clientmanager.db.AppDatabase;
 import io.github.prathameshpatel.clientmanager.db.DataGenerator;
 import io.github.prathameshpatel.clientmanager.entity.Client;
 
-
-
 public class AllFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -100,12 +98,10 @@ public class AllFragment extends Fragment {
         //The RecyclerView.LayoutManager defines how elements are laid out.
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
         return allFragmentView;
     }
 
     private class DatabaseAsync extends AsyncTask<Void,Void,Void> {
-
         @Override
         protected Void doInBackground(Void... voids) {
             mdb.beginTransaction();
@@ -119,23 +115,16 @@ public class AllFragment extends Fragment {
             } finally {
                 mdb.endTransaction();
             }
-
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
             //Define an adapter
             mAdapter = new AllRecyclerAdapter(mclientList);
             mRecyclerView.setAdapter(mAdapter);
             mAdapter.notifyDataSetChanged();
-
-//            for(Client client : AllFragment.this.mclientList) {
-//                System.out.print("AllFragment-onPostExecute: ");
-//                System.out.println(client.getClientId()+" "+client.getFirstName()+" "+client.getLastName());
-//            }
         }
     }
 
